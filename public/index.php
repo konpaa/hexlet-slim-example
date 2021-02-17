@@ -22,13 +22,13 @@ $app->get('/', function ($request, $response) {
     // return $response->write('Welcome to Slim!');
 });
 
-$app->get('/users', function ($request, $response) {
-    return $response->write('GET /users');
-});
-
-$app->post('/users', function ($request, $response) {
-    return $response->withStatus(302);
-});
+//$app->get('/users', function ($request, $response) {
+//    return $response->write('GET /users');
+//});
+//
+//$app->post('/users', function ($request, $response) {
+//    return $response->withStatus(302);
+//});
 
 $app->get('/courses/{id}', function ($request, $response, array $args) {
     $id = $args['id'];
@@ -41,5 +41,12 @@ $app->get('/users/{id}/{nickname}', function ($request, $response, $args) {
     // $this доступен внутри анонимной функции благодаря https://php.net/manual/ru/closure.bindto.php
     // $this в Slim это контейнер зависимостей
     return $this->get('renderer')->render($response, 'users/show.phtml', $params);
+});
+
+$users = ['mike', 'mishel', 'adel', 'keks', 'kamila'];
+
+$app->get('/users', function ($request, $response) use ($users){
+
+    return $this->get('renderer')->render($response, 'users/index.phtml', $users);
 });
 $app->run();
