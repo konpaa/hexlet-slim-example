@@ -1,13 +1,47 @@
-<form action="/users">
-    <input type="search" name="term" value="<?= htmlspecialchars($term) ?>"">
-    <input type="submit" value="Search">
+<form action="/users" method="get">
+    <input type="search" name="term" value="<?= htmlspecialchars($term) ?>" />
+    <input type="submit" value="Search" />
 </form>
-<?php foreach ($user as $resul) : ?>
-    <p><?= $resul ?></p>
-<?php endforeach; ?>
+<table>
+    <?php foreach ($users as $user) : ?>
+        <tr>
+            <td>
+                <?php
+                if (strpos($user['nickname'], $term) !== false) :
+                    echo (htmlspecialchars($user['nickname']));
+                endif;
+                ?>
+            </td>
+        </tr>
+    <?php endforeach ?>
+</table>
+<h1>Зарегистрированные пользователи</h1>
+<table>
+    <tr>
+        <?php foreach ($users[0] as $key => $value) : ?>
+            <td>
+                <h3><?= $key   ?></h3>
+            </td>
+        <?php endforeach ?>
+    </tr>
+    <?php foreach ($users as $user) : ?>
 
-
-<h1 style="color: red">Все имена <br></h1>
-<?php foreach ($users as $user) : ?>
-    <p><?= $user ?></p>
-<?php endforeach; ?>
+        <tr>
+            <td>
+                <p><?= htmlspecialchars($user['id']) ?></p>
+            </td>
+            <td>
+                <p><?= htmlspecialchars($user['nickname']) ?></p>
+            </td>
+            <td>
+                <p><?= htmlspecialchars($user['firstName']) ?></p>
+            </td>
+            <td>
+                <p><?= htmlspecialchars($user['lastName']) ?></p>
+            </td>
+            <td>
+                <p><?= htmlspecialchars($user['email']) ?></p>
+            </td>
+        </tr>
+    <?php endforeach ?>
+</table>
