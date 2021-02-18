@@ -6,6 +6,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Slim\Factory\AppFactory;
 use DI\Container;
+use function Symfony\Component\String\s;
 
 $container = new Container();
 $container->set('renderer', function () {
@@ -46,7 +47,14 @@ $app->get('/users/{id}/{nickname}', function ($request, $response, $args) {
 $users = ['mike', 'mishel', 'adel', 'keks', 'kamila'];
 
 $app->get('/users', function ($request, $response) use ($users){
+    $term = $request->getQueryParam('term');
+    $result = collect($users)->filter(fn($user) => empty($user) ? true : s($user)->containsAny($term));
+    $params = [
+        'users'=> $users,
+        'user' => $result,
+        'term' => $term
+    ];
 
-    return $this->get('renderer')->render($response, 'users/index.phtml', $users);
+    return $this->get('renderer')->render($response, 'users/index.phtml', $params);
 });
 $app->run();

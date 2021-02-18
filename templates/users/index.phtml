@@ -1,1 +1,13 @@
-<p><?= $users ?></p>
+<form action="/users">
+    <input type="search" name="term" value="<?= htmlspecialchars($term) ?>"">
+    <input type="submit" value="Search">
+</form>
+<?php foreach ($user as $resul) : ?>
+    <p><?= $resul ?></p>
+<?php endforeach; ?>
+
+
+<h1 style="color: red">Все имена <br></h1>
+<?php foreach ($users as $user) : ?>
+    <p><?= $user ?></p>
+<?php endforeach; ?>
